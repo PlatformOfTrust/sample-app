@@ -1,0 +1,25 @@
+body {
+    #router-container {
+        width: 100%;
+        height: 100%;
+    }
+
+    .request {
+        padding: 1rem;
+    }
+
+    .login-button {
+        font-size: 3rem;
+        padding: 1rem 2rem;
+    }
+
+    span {
+        background-color: greenyellow;
+    }
+
+    pre {
+        display: block;
+        background: pink;
+        border: 1px solid indianred;
+    }
+}

@@ -1,0 +1,17 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+bottle = "==0.12.13"
+invoke = "==1.1.1"
+webargs = "==3.0.2"
+requests = "==2.21.0"
+python-dateutil = "==2.6.0"
+passlib = "==1.7.1"
+
+[dev-packages]
+
+[requires]
+python_version = "3.6"
