@@ -8,6 +8,7 @@ import json
 import time
 
 from datetime import datetime, timezone
+from binascii import hexlify
 
 
 def rfc3339() -> str:
@@ -108,3 +109,90 @@ def get_ts() -> int:
     :rtype: int
     """
     return int(time.time())
+
+
+def generate_state(data: dict, salt: str) -> str:
+    """Generate oauth state base64 encoded string out of arbitrary data
+
+    :param data: Data to be encrypted
+    :type data: dict
+    :param salt: Salt for randomized hashing
+    :type salt: str
+    :return: Base64 encoded string
+    :rtype: str
+    """
+    data_bytes = json.dumps(data).encode()
+    hash = hash_sha1(salt, data_bytes)
+
+    state = {
+        'd': data,
+        'h': hash
+    }
+
+    return encode_base64_dict(state)
+
+
+def validate_state(encoded_state: str, salt: str, expires_in: int) -> bool:
+    """Validate oauth state
+
+    :param encoded_state: Base64 encoded state
+    :type encoded_state: str
+    :param salt: Salt for randomized hashing
+    :type salt: str
+    :param expires_in: Validate timestamp against current time
+    :type expires_in: int
+    :return: True or False
+    :rtype: bool
+    """
+    state = decode_base64_dict(encoded_state)
+    state_data = state.get('d', {})
+
+    ts = state_data.get('ts', None)
+    now = get_ts()
+
+    if ts and ts + expires_in < now:
+        return False
+
+    if generate_state(state_data, salt) != encoded_state:
+        return False
+
+    return True
+
+
+def decode_base64_dict(base64_str: str) -> dict:
+    """Decode Base64 string
+
+    :param base64_str: Base64 encoded data
+    :type base64_str: str
+    :return: Data
+    :rtype: dict
+    """
+    return json.loads(base64.b64decode(base64_str))
+
+
+def encode_base64_dict(data: dict) -> str:
+    """Encode dict into base64
+
+    :param base64_str: Base64 encoded data
+    :type base64_str: str
+    :return: Data
+    :rtype: dict
+    """
+    encode_data = base64.b64encode(json.dumps(data).encode())
+    encode_data = encode_data.decode()
+
+    return encode_data
+
+
+def hash_sha1(salt: str, data_bytes: bytes) -> str:
+    """Hash data and return decoded string
+
+    :param salt: Salt for hashing
+    :type salt: str
+    :param data_bytes: Data in bytes
+    :type data_bytes: bytes
+    :return: Hash
+    :rtype: str
+    """
+    hash = hmac.new(salt.encode(), data_bytes, hashlib.sha1).digest()
+    return hexlify(hash).decode()
