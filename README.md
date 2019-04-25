@@ -45,14 +45,10 @@ Install the environment for running the local tools:
 pipenv install --dev
 ```
 
-Configure `backend/setting.py`. You can get these values from [World App Sandbox](https://world-sandbox.oftrust.net)
+Configure `backend/setting.py`. You can get these values by registering your application in the [World application](https://world-sandbox.oftrust.net).
 
 ```
-ACCESS_TOKENS = [
-   ‘d6e04c33-5f4e-4ce6-949f-c2a42584eeba’,
-   ‘ec6e866d-41bf-4ad0-abb7-a998e42aad97’
-]
-
+ACCESS_TOKEN = 'b739612b-29d8-4b4f-af3e-caf9d1528387'
 CLIENT_SECRET = ‘bdMeUM-e3wuCAQ-ZDiZvGUs0OCSnrMXZWBxEyC2Xz4k’
 CLIENT_ID = ‘c186a963-6eeb-44de-8bd6-01a8c600c757’
 ```

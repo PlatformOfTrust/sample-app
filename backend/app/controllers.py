@@ -220,7 +220,7 @@ class Broker(Base):
             'parameters': args['parameters']
         }
 
-        access_token = settings.ACCESS_TOKENS[0]
+        access_token = settings.ACCESS_TOKEN
 
         headers = {
             'x-pot-app': settings.CLIENT_ID,

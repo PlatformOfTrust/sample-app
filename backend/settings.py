@@ -44,10 +44,6 @@ REDIRECT_URL = f'{APP_URL}/api/exchangeToken'
 # You can get all values listed below after creating an application.
 # Go to https://world-sandbox.oftrust.net/
 
-ACCESS_TOKENS = [
-    '',
-    ''
-]
-
-CLIENT_SECRET = ''
 CLIENT_ID = ''
+ACCESS_TOKEN = ''
+CLIENT_SECRET = ''
