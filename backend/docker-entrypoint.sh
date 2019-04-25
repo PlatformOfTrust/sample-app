@@ -1,5 +1,5 @@
 #!/usr/bin/env sh
-set -exu
+set -exuo pipefail
 
 set -- pipenv run invoke dev
 
