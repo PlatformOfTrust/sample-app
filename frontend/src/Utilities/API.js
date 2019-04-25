@@ -20,7 +20,7 @@ class API {
 
     // Authorization API
     async login() {
-        return fetch(`${this.baseUrl}/login`).then(await API.ResponseHandler);
+        window.location.href = `${this.baseUrl}/login`;
     }
 
     async logout() {

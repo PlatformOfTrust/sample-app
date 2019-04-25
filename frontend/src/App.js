@@ -29,12 +29,8 @@ class App extends Component {
         }
     }
 
-    async onLogin() {
-        const { ok, data } = await API.login();
-        if (ok) {
-            window.location.href = data.uri;
-        }
-
+    onLogin() {
+        API.login();
     }
 
     async onLogout() {

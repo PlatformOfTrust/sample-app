@@ -161,7 +161,7 @@ class Login(Base):
 
         uri = f'{self._login_authorization_uri}&state={encoded_state}'
 
-        return responses.JSONResponse({'uri': uri})
+        bottle.redirect(uri)
 
     def logout(self) -> responses.JSONResponse:
         """Delete authorization cookie(s)
