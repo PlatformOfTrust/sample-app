@@ -28,7 +28,7 @@ def generate_signature(secret: str, body: dict) -> str:
     :type secret: str
     :param body: The body to sign.
     :type body: dict
-    :return: The generated signature.
+    :return: The generated base64 encoded signature
     :rtype: str
     """
     digest = get_digest(secret, body)
@@ -46,11 +46,11 @@ def get_digest(secret: str, body) -> str:
     :rtype: str
     :raise RuntimeError: If the body is not a string or dictionary.
     """
-    body_hash = get_signature_payload(body)
+    payload = get_signature_payload(body)
 
     # Create the HMAC digest with SHA-256.
     return hmac.new(secret.encode('utf-8'),
-                    body_hash.encode('utf-8'),
+                    payload.encode('utf-8'),
                     hashlib.sha256).digest()
 
 
@@ -61,7 +61,7 @@ def get_signature_payload(body) -> str:
 
     :param body: The body to be hashed.
     :type body: str|dict
-    :return: The body hash.
+    :return: JSON formatted string.
     :rtype: str
     :raise RuntimeError: IF the body is not a string or dict.
     """
@@ -71,16 +71,16 @@ def get_signature_payload(body) -> str:
 
     # Create the hash from the body dict.
     if isinstance(body, dict):
-        body_hash = json.dumps(
+        json_str = json.dumps(
             body,
             sort_keys=True,
             indent=None,
             separators=(',', ': ')
         ).strip()
     else:
-        body_hash = body.strip()  # Strip white space from start and end.
+        json_str = body.strip()  # Strip white space from start and end.
 
-    return body_hash
+    return json_str
 
 
 def request_args(args):
