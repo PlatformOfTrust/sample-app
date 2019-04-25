@@ -28,6 +28,9 @@ GRANT_TYPES = {
 }
 RESPONSE_TYPE = 'code'
 
+OAUTH_STATE_SALT = 'example-state-salt'
+OAUTH_STATE_EXPIRES_IN = 24 * 60 * 60
+
 SSL_ENABLED = False
 
 LOGIN_APP_URL = 'https://login-sandbox.oftrust.net'

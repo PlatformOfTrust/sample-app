@@ -7,8 +7,8 @@ The Base contains attributes and functions common to all controllers.
 """
 import bottle
 import common.responses as responses
-from common.utils import request_args, \
-    get_ts, rfc3339, generate_signature
+from common.utils import request_args, validate_state, \
+    get_ts, rfc3339, generate_signature, generate_state
 import settings
 from app import services
 from webargs import fields
@@ -78,6 +78,7 @@ class Login(Base):
         """
 
         code = bottle.request.params.get('code', None)
+        state = bottle.request.params.get('state', None)
 
         if code is None:
             return responses.JSONResponse(
@@ -90,11 +91,24 @@ class Login(Base):
             'client_id': settings.CLIENT_ID,
             'redirect_uri': settings.REDIRECT_URL,
             'grant_type': settings.GRANT_TYPES['exchange_token'],
-            'code': code
+            'code': code,
+            'state': state
         })
 
         if auth_api_response.ok:
             data = auth_api_response.json()
+
+            response_state = data.get('state', '')
+            ok = validate_state(response_state, settings.OAUTH_STATE_SALT,
+                                settings.OAUTH_STATE_EXPIRES_IN)
+
+            if not ok:
+                response = responses.JSONResponse(
+                    body={'message': 'Validation failed'},
+                    status=406
+                )
+
+                return response
 
             response = responses.JSONResponse(
                 headers={
@@ -141,7 +155,11 @@ class Login(Base):
         :rtype: responses.JSONResponse
         """
 
-        uri = f'{self._login_authorization_uri}'
+        encoded_state = generate_state({
+            'ts': get_ts()
+        }, settings.OAUTH_STATE_SALT)
+
+        uri = f'{self._login_authorization_uri}&state={encoded_state}'
 
         return responses.JSONResponse({'uri': uri})
 
