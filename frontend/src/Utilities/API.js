@@ -1,13 +1,13 @@
 import config from 'config';
 
 class API {
-    baseUrl: string = '';
+    baseUrl = '';
 
     constructor() {
         this.baseUrl = config.appBackend;
     }
 
-    static async ResponseHandler(response: Response) {
+    static async ResponseHandler(response) {
         try {
             return { ok: response.ok, data: await response.json() };
         } catch (error) {
@@ -32,12 +32,12 @@ class API {
     }
 
     // Identity API
-    async getIdentity(id: string) {
+    async getIdentity(id) {
         return fetch(`${this.baseUrl}/identities/${id}`).then(await API.ResponseHandler);
     }
 
     // Broker API
-    async fetchDataProduct(productCode: string, parameters) {
+    async fetchDataProduct(productCode, parameters) {
         return fetch(`${this.baseUrl}/fetch-data-product`, {
             method: 'POST',
             headers: {

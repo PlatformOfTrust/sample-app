@@ -4,15 +4,8 @@ import React, {Component} from 'react';
 
 import API from 'Utilities/API';
 
-type AppPageProps = {};
-type AppPageState = {
-    user: {};
-    identity: {};
-    dataProduct: {};
-};
-
-class App extends Component <AppPageProps, AppPageState> {
-    constructor(props: AppPageProps) {
+class App extends Component {
+    constructor(props) {
         super(props);
         this.state = {};
         this.onLogin = this.onLogin.bind(this);
@@ -55,7 +48,6 @@ class App extends Component <AppPageProps, AppPageState> {
     render() {
         return (
             <div>
-
                 {!this.state.user &&
                 <button className="login-button" onClick={this.onLogin}>Log
                     in</button>
