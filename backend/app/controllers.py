@@ -63,7 +63,7 @@ class Login(Base):
 
     def __init__(self, app: bottle.Bottle = None):
         super().__init__(app)
-        self._request = services.Request('login')
+        self._login_service = services.Request('login')
         self._login_authorization_uri = f'{settings.LOGIN_APP_URL}' \
             f'?grant_type={settings.GRANT_TYPES["authorization"]}' \
             f'&response_type={settings.RESPONSE_TYPE}' \
@@ -86,7 +86,7 @@ class Login(Base):
                 status=406
             )
 
-        auth_api_response = self._request.post('/exchangeToken', {
+        auth_api_response = self._login_service.post('/exchangeToken', {
             'client_secret': settings.CLIENT_SECRET,
             'client_id': settings.CLIENT_ID,
             'redirect_uri': settings.REDIRECT_URL,
@@ -139,7 +139,7 @@ class Login(Base):
         :rtype: responses.JSONResponse
         """
 
-        response = self._request.get(
+        response = self._login_service.get(
             '/me',
             authorization_token=bottle.request.get_cookie(
                 'Authorization')
@@ -188,7 +188,7 @@ class Identity(Base):
 
     def __init__(self, app: bottle.Bottle = None):
         super().__init__(app)
-        self._request = services.Request('identity')
+        self._identity_service = services.Request('identity')
 
     def read(self, id: str) -> responses.JSONResponse:
         """Returns one identity.
@@ -199,7 +199,7 @@ class Identity(Base):
         :rtype: responses.JSONResponse
         """
 
-        response = self._request.get(
+        response = self._identity_service.get(
             f'/{id}',
             authorization_token=bottle.request.get_cookie('Authorization'))
 
@@ -215,7 +215,7 @@ class Broker(Base):
 
     def __init__(self, app: bottle.Bottle = None):
         super().__init__(app)
-        self._request = services.Request('broker')
+        self._broker_service = services.Request('broker')
 
     @request_args({
         'productCode': fields.Str(required=True),
@@ -245,7 +245,7 @@ class Broker(Base):
             'x-pot-signature': generate_signature(access_token, json)
         }
 
-        response = self._request.post(f'/fetch-data-product', data=json,
+        response = self._broker_service.post(f'/fetch-data-product', data=json,
                                       headers=headers)
 
         return responses.JSONResponse(body=response.text,
