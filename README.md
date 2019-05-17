@@ -1,5 +1,7 @@
 # Sample App
 
+Note: This setup is only meant for running in minikube and for demo purposes only, not production ready.
+
 ## Quick overview
 
 This is the main repository for sample-app app.

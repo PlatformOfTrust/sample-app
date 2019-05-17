@@ -55,6 +55,7 @@ metadata:
   name: sample-app-frontend
   namespace: sample-app
 spec:
+  replicas: 1
   selector:
     matchLabels:
       app: sample-app-frontend
@@ -72,6 +73,7 @@ spec:
           imagePullPolicy: IfNotPresent
           image: sample-app-frontend:latest
           workingDir: '/src/sample-app/frontend'
+           # Disable this when deploying to non-dev environments
           volumeMounts:
             - name: host-mount
               mountPath: '/src/sample-app/frontend/src'
