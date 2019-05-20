@@ -1,4 +1,4 @@
 #!/usr/bin/env sh
-set -exu
+set -exuo pipefail
 
 npm install

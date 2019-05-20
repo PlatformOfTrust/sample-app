@@ -3,6 +3,7 @@ import 'App.scss';
 import React, {Component} from 'react';
 
 import API from 'Utilities/API';
+import config from 'config';
 
 class App extends Component {
     constructor(props) {
@@ -19,7 +20,7 @@ class App extends Component {
                 const { ok, data } = await API.getIdentity(this.state.user['@id']);
                 if (ok) {
                     this.setState({ identity: data }, async () => {
-                        const { ok, data } = await API.fetchDataProduct('prh-business-identity-data-product', { businessId: '2980005-2' });
+                        const { ok, data } = await API.fetchDataProduct('prh-business-identity-data-product', { businessId: config.potBusinessId });
                         if (ok) {
                             this.setState({ dataProduct: data });
                         }

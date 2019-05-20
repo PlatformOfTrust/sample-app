@@ -6,6 +6,7 @@ metadata:
   name: sample-app-backend
   namespace: sample-app
 spec:
+  replicas: 1
   selector:
     matchLabels:
       app: sample-app-backend
@@ -23,6 +24,7 @@ spec:
           imagePullPolicy: IfNotPresent
           image: sample-app-backend:latest
           workingDir: '/src/sample-app/backend'
+          # Disable this when deploying to non-dev environments
           volumeMounts:
             - name: host-mount
               mountPath: '/src/sample-app'

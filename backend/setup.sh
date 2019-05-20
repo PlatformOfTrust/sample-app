@@ -1,5 +1,5 @@
 #!/usr/bin/env sh
-set -exu
+set -exuo pipefail
 
 if [[ ! -d "${WORKON_HOME}" ]]; then
     mkdir "${WORKON_HOME}"
