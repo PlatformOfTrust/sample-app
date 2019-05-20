@@ -18,6 +18,8 @@ Follow this README to setup sample app and view basic features of Platform Of Tr
 - [Minikube](https://kubernetes.io/docs/setup/minikube/)
 - [Kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/)
 - [Docker](https://docs.docker.com/get-started/)
+  (For docker Win10 installation, a legacy docker version called "toolbox" must be installed for it to work with Win10 + Virtualbox:
+https://docs.docker.com/toolbox/toolbox_install_windows/)
 - Pipenv `pip install pipenv`
 
 ### Step 2: Run sample app
@@ -33,6 +35,10 @@ minikube start --mount-string .:/src/sample-app --mount --memory=4096 --cpus=4
 eval $(minikube docker-env)
 
 # Windows:
+# Open a new command prompt window to the sample app dir and run command:
+minikube mount .:/src/sample-app --ip=192.168.99.1
+#
+# Then in the original command prompt:
 # @FOR /f "tokens=*" %i IN ('minikube docker-env') DO @%i
 ```
 
@@ -51,8 +57,8 @@ Configure `backend/setting.py`. You can get these values by registering your app
 
 ```
 ACCESS_TOKEN = 'b739612b-29d8-4b4f-af3e-caf9d1528387'
-CLIENT_SECRET = ‘bdMeUM-e3wuCAQ-ZDiZvGUs0OCSnrMXZWBxEyC2Xz4k’
-CLIENT_ID = ‘c186a963-6eeb-44de-8bd6-01a8c600c757’
+CLIENT_SECRET = 'bdMeUM-e3wuCAQ-ZDiZvGUs0OCSnrMXZWBxEyC2Xz4k'
+CLIENT_ID = 'c186a963-6eeb-44de-8bd6-01a8c600c757'
 ```
 
 #### Run the app:
