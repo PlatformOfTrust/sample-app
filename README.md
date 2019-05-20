@@ -35,11 +35,11 @@ minikube start --mount-string .:/src/sample-app --mount --memory=4096 --cpus=4
 eval $(minikube docker-env)
 
 # Windows:
-# Open a new command prompt window to the sample app dir and run command:
+Open a new command prompt window to the sample app dir and run command:
 minikube mount .:/src/sample-app --ip=192.168.99.1
-#
-# Then in the original command prompt:
-# @FOR /f "tokens=*" %i IN ('minikube docker-env') DO @%i
+
+Then in the original command prompt:
+@FOR /f "tokens=*" %i IN ('minikube docker-env') DO @%i
 ```
 
 
@@ -77,7 +77,6 @@ That's it!
 ### Minikube
 Your minikube IP can be something else than `192.168.99.100`. You can check it with:
 `minikube ip`.
-
 
 #### Python
 You might need to install Python 3.6.0. You can use `pyenv` to install version of python and set it as default.
