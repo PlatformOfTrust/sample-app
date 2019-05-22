@@ -24,11 +24,12 @@ https://docs.docker.com/toolbox/toolbox_install_windows/)
 
 ### Step 2: Run sample app
 
-#### For Windows setup only: Set entry point
+#### For Windows setup only: Set entry point and allow VMs in VB Network settings
 Modify ENTRYPOINT in sample-app\backend\Dockerfile to get around Windows permission issues. Set it to:
 ```
 ENTRYPOINT ["sh", "docker-entrypoint.sh"]
 ```
+Open VirtualBox settings for minikube, choose Network, Adapter 2, Advanced and set Promiscuous Mode to "Allow VMs".
 
 #### Start Minikube:
 ```
