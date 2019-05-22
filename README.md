@@ -24,6 +24,13 @@ https://docs.docker.com/toolbox/toolbox_install_windows/)
 
 ### Step 2: Run sample app
 
+#### For Windows setup only: Set entry point and allow VMs in VB Network settings
+Modify ENTRYPOINT in sample-app\backend\Dockerfile to get around Windows permission issues. Set it to:
+```
+ENTRYPOINT ["sh", "docker-entrypoint.sh"]
+```
+Open VirtualBox settings for minikube, choose Network, Adapter 2, Advanced and set Promiscuous Mode to "Allow VMs".
+
 #### Start Minikube:
 ```
 minikube start --mount-string .:/src/sample-app --mount --memory=4096 --cpus=4
@@ -34,16 +41,17 @@ minikube start --mount-string .:/src/sample-app --mount --memory=4096 --cpus=4
 # Unix   
 eval $(minikube docker-env)
 
-# Windows:
-Open a new command prompt window to the sample app dir and run command:
-minikube mount .:/src/sample-app --ip=192.168.99.1
+# On Windows minikube mount doesn't work out of the box ("minikube --mount-string" is problematic).
+# Open another terminal in the same folder and run
+minikube ip  # Get IP of the minikube machine (192.168.99.100 by default)
+minikube mount .:/src/sample-app --ip=192.168.99.100  # Fill in the correct IP if different.
 
 Then in the original command prompt:
 @FOR /f "tokens=*" %i IN ('minikube docker-env') DO @%i
 ```
 
 
-Update `/etc/hosts` or `C:\Windows\System32\Drivers\etc\hosts`:
+Update `/etc/hosts` or `C:\Windows\System32\Drivers\etc\hosts` with IP from "minikube ip":
 ```
 192.168.99.100 sample-app.local
 ```
