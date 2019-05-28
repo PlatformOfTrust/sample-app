@@ -43,8 +43,7 @@ eval $(minikube docker-env)
 
 # On Windows minikube mount doesn't work out of the box ("minikube --mount-string" is problematic).
 # Open another terminal in the same folder and run
-minikube ip  # Get IP of the minikube machine (192.168.99.100 by default)
-minikube mount .:/src/sample-app --ip=192.168.99.100  # Fill in the correct IP if different.
+minikube mount .:/src/sample-app --ip=192.168.99.1
 
 Then in the original command prompt:
 @FOR /f "tokens=*" %i IN ('minikube docker-env') DO @%i
