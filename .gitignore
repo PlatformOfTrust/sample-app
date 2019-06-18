@@ -82,3 +82,5 @@ node_modules/
 # Docs
 apis/*/docs/index.html
 docs/*/index.html
+.scannerwork
+.vscode
