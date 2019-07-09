@@ -86,4 +86,4 @@ Your minikube IP can be something else than `192.168.99.100`. You can check it w
 `minikube ip`.
 
 #### Python
-You might need to install Python 3.6.0. You can use `pyenv` to install version of python and set it as default.
+For now, the required Python version is 3.6.0. You can use `pyenv` to install version of python and set it as default.
