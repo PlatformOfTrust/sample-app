@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: haproxy
+  namespace: sample-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: haproxy
+  template:
+    metadata:
+      labels:
+        app: haproxy
+    spec:
+      containers:
+        - name: haproxy
+          imagePullPolicy: IfNotPresent
+          image: sample-app-router:latest
+          ports:
+            - containerPort: 80
+              name: http
+          securityContext:
+            allowPrivilegeEscalation: false
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: haproxy
+  namespace: sample-app
+spec:
+  type: NodePort
+  ports:
+    - name: http
+      nodePort: 32600
+      port: 80
+      protocol: TCP
+      targetPort: 80
+  selector:
+    app: haproxy
